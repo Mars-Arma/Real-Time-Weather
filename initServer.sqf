@@ -9,3 +9,4 @@ enableTeamSwitch false;
 // Setup configuration
 call life_fnc_configuration;
 
+[] spawn life_fnc_setWeather;
