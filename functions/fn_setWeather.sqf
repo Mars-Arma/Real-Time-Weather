@@ -18,8 +18,8 @@ if (isServer) then {
 	
 
 	// set locations and names of the place the API will search for
-	Weather_worldVar = "Canada";
-	Weather_cityVar = "Vancouver";
+	Weather_worldVar = "Greece";
+	Weather_cityVar = "Limnos";
 	WorldLat = "39.5329";
 	WorldLong = "25.0122";
 	Bracket = "/";
