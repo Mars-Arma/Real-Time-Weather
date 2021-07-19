@@ -13,6 +13,7 @@ class CfgFunctions {
 			class grabData {};
 			class setWeather {};
 			class sortData {};
+			class nightLights {};
 		};
 
 		class HUDFunctions {

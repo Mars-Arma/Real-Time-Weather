@@ -1,4 +1,5 @@
-life_WeatherKeyAPI = "c0caf83e9c8fddf6aabeb0ab092537fe";
+// place API key here (inside the empty "")
+life_WeatherKeyAPI = "";
 life_timeOut = false;
 life_dataReady = false;
 life_error = false;

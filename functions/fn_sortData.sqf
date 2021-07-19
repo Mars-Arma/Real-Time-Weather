@@ -1,6 +1,6 @@
 // File: fn_sortData.sqf
 // Author: Infamous
-// Description: Sorts the data
+// Description: Sorts the weather data which is returned by the API
 
 private ["_result","_temp_c","_temp_f","_weathercode","_rainlevel","_relative_humidity","_wind_degrees","_wind_kph","_wind_mph","_wind_gust_mph","_wind_gust_kph","_pressuretrend","_pressure","_pressureIn","_rainchance","_totalrain","_date","_day","_month","_year","_hour","_minute"];
 _result = _this;

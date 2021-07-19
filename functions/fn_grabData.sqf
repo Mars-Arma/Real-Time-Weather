@@ -31,8 +31,6 @@ private ["_result","_results","_ticks"];
 
     };
 
-
-	//if (!isNil "HZ_DEBUG") then {hint _result;copyToClipboard _result;};
 	life_dataReady = true;
 	_results = [_result, "DONE"];
 	_results
