@@ -9,7 +9,6 @@ meteor = {
 	// params	
 	params ["_RedCo", "_GreenCo", "_BlueCo"];
 	_color = [0.254,0.225,0.227];
-	systemChat "Launching";
 	// setting up vars and creating light point and the vehicle it will attach to.
 	_positions =  [[14105.4,11562.9,0.00239754], [12387,10065.9,0.00175619], [11412.4,6882.22,0.00141907],
 	[3130.15,9987.29,0.000762939], [3953.95,15152.3,0.00139618], [16596.9,14975.1,0.00145674], 
@@ -93,7 +92,7 @@ waitUntil {
 	_time = false;
 	_hour = date select 3;
 	sleep 1; 
-	if (_hour >= 22 || _hour < 6) then {_time = true };
+	if (_hour >= 20 || _hour < 6) then {_time = true };
 	_time;
 };
 
@@ -114,7 +113,7 @@ while {date select 3 >= 22 || date select 3 < 6} do {
 	};
 
 	// add a delay in the loop. CHANGE THIS TO CHANGE THE DELAY FOR EACH METEOR TO BE CREATED
-	sleep 0.5;
+	sleep 300;
 };
 
 
