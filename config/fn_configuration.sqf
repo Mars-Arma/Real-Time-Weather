@@ -5,4 +5,6 @@ life_dataReady = false;
 life_error = false;
 life_realWeatherStats = [];
 life_timeVar = true;
-life_fogvar = true;
+life_fogVar = true;
+life_rainVar = true;
+life_windVar = true;

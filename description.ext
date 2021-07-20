@@ -16,6 +16,7 @@ respawnDialog = 0;
 respawnButton = 0;
 disabledAI = true;
 joinUnassigned = 0;
+enableDebugConsole = 2;
 
 // CFG
 #include "functions.hpp"

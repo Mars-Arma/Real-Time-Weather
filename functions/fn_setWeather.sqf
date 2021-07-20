@@ -4,7 +4,6 @@
 // Description: Gets data and sends it to be sorted, then sets the weather on the server.
 
 
-
 // makes sure this is only ran on the server
 if (isServer) then {
 	
@@ -66,50 +65,55 @@ if (isServer) then {
 	_SERVERDATE = life_realWeatherStats select 11;
 	_SERVERCLOUDCOVER = life_realWeatherStats select 12;
 	_rainlevel = life_realWeatherStats select 13;
-	setLiveWeather = {
-		params ["_SERVERTEMPF", "_SERVERTEMPC", "_SERVERWINDSPEEDMph", "_SERVERWINDSPEEDMphGust", "_SERVERWINDSPEEDKph", "_SERVERWINDSPEEDKphGust", 
-		"_SERVERWINDDIR", "_SERVERHUMID","_SERVERPRESSUREIN", "_SERVERTOTALRAIN", "_SERVERRAINCHANCE", "_SERVERDATE", "_SERVERCLOUDCOVER", "_rainlevel"];
 
-		private ["_year","_month","_day","_hour","_minute"];
-		_year = _SERVERDATE select 0;
-		_month = _SERVERDATE select 1;
-		_day = _SERVERDATE select 2;
-		_hour = _SERVERDATE select 3;
-		_minute = _SERVERDATE select 4;
 
-		if (Life_timeVar) then 
-		{
-			
-			[_year, _month, _day, _hour, _minute] spawn
-			{
-			waitUntil {(time > 0)};
-			setDate [(_this select 0), (_this select 1), (_this select 2), (_this select 3), (_this select 4)];
-			};
-		};
-		_rainchance2 = (_SERVERRAINCHANCE * 0.1) min 0.5;
-		enableEnvironment true;
-		15 setOvercast ((_SERVERCLOUDCOVER*0.75)+ (_rainlevel * 0.5));
-		15 setRain (_rainlevel+_rainchance2);
-		if (life_fogvar) then {0 setFog (_SERVERHUMID * 0.00025);};
+	private ["_year","_month","_day","_hour","_minute"];
+	enableEnvironment true;
+	_year = _SERVERDATE select 0;
+	_month = _SERVERDATE select 1;
+	_day = _SERVERDATE select 2;
+	_hour = _SERVERDATE select 3;
+	_minute = _SERVERDATE select 4;
+
+	if (life_timeVar) then 
+	{
 		
+		[_year, _month, _day, _hour, _minute] spawn
+		{
+		[[(_this select 0), (_this select 1), (_this select 2), (_this select 3), (_this select 4)]] remoteExec ["setDate"];
+		};
+	};
 
-		//1 mph = 0.447040 meters per second
-		//1km = 0.277778 meters per second
+	if (life_rainVar) then 
+	{
+		_rainchance2 = (_SERVERRAINCHANCE * 0.1) min 0.5;
+		[((_SERVERCLOUDCOVER*0.75)+ (_rainlevel * 0.5))] remoteExec ["setOvercast"];
+		15 setRain (_rainlevel+_rainchance2);
+	};
+
+	if (life_fogvar) then
+	{
+	0 setFog (_SERVERHUMID * 0.00025);
+	};
+
+	//1 mph = 0.447040 meters per second
+	//1km = 0.277778 meters per second
+	if (life_windVar) then 
+	{
 		private _value = (_SERVERWINDSPEEDKph / 3.6);
 		setWind [_value, _value, false];
 		15 setWindDir _SERVERWINDDIR;
-		15 setGusts (_SERVERWINDSPEEDKph*0.01);
-		forceWeatherChange;
-
-		//[_temp_f,_temp_c,_wind_mph,_wind_gust_mph,_wind_kph,_wind_gust_kph,_wind_degrees,_relative_humidity,_pressureIn,_totalrain,_rainchance,_date,_cloudcover];
-		systemChat format ["The Temperature in F is currently %1, in C, it is %2. The wind is currently %3mph, with gusts of %4. In Kph the wind is %5 with gusts of %6,
-		The wind is currently blowing at bering %7. The humidity is currenlty %8, and the pressure is %9. The total current rain is %10 with a chance of %11 to rain. The current time
-		is %12, %13, %14, %15, %16. With a cloudcover of %17.
-		
-		", _SERVERTEMPF, _SERVERTEMPC, _SERVERWINDSPEEDMph, _SERVERWINDSPEEDMphGust, _SERVERWINDSPEEDKph, _SERVERWINDSPEEDKphGust, _SERVERWINDDIR, _SERVERHUMID,
-		_SERVERPRESSUREIN, _SERVERTOTALRAIN, _SERVERRAINCHANCE, _SERVERDATE, _SERVERCLOUDCOVER, _rainlevel];
+		[15, (_SERVERWINDSPEEDKph*0.01)] remoteExec ["setGusts"];
 	};
-	[_SERVERTEMPF, _SERVERTEMPC, _SERVERWINDSPEEDMph, _SERVERWINDSPEEDMphGust, _SERVERWINDSPEEDKph, _SERVERWINDSPEEDKphGust, _SERVERWINDDIR, _SERVERHUMID,
-	_SERVERPRESSUREIN, _SERVERTOTALRAIN, _SERVERRAINCHANCE, _SERVERDATE, _SERVERCLOUDCOVER, _rainlevel] remoteExec ["setLiveWeather", 0, true];
+	forceWeatherChange;
+
+	//[_temp_f,_temp_c,_wind_mph,_wind_gust_mph,_wind_kph,_wind_gust_kph,_wind_degrees,_relative_humidity,_pressureIn,_totalrain,_rainchance,_date,_cloudcover];
+	systemChat format ["The Temperature in F is currently %1, in C, it is %2. The wind is currently %3mph, with gusts of %4. In Kph the wind is %5 with gusts of %6,
+	The wind is currently blowing at bering %7. The humidity is currenlty %8, and the pressure is %9. The total current rain is %10 with a chance of %11 to rain. The current time
+	is %12, %13, %14, %15, %16. With a cloudcover of %17.
+	
+	", _SERVERTEMPF, _SERVERTEMPC, _SERVERWINDSPEEDMph, _SERVERWINDSPEEDMphGust, _SERVERWINDSPEEDKph, _SERVERWINDSPEEDKphGust, _SERVERWINDDIR, _SERVERHUMID,
+	_SERVERPRESSUREIN, _SERVERTOTALRAIN, _SERVERRAINCHANCE, _SERVERDATE, _SERVERCLOUDCOVER, _rainlevel];
+
 };
 	
