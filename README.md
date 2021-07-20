@@ -19,7 +19,7 @@ the two url fetch DLL's need to be placed in your arma 3 download directory (thi
 
 both the scripts are called from the initServer.sqf file. (initNightLights and setWeather) these both run on the server, however createNightLights is remotely executed from the server onto all clients as #lightpoints are all local.
 
-you will require an API key, you can get one from https://weatherstack.com/ A free account should suffice.
+you will require an API key, you can get one from https://weatherstack.com/ A free account should suffice. (THIS IS ONLY FOR THE LIVE WEATHER PART)
 
 make sure you open the configuration file located inside the config folder and set the api key to the variable "life_WeatherKeyAPI" 
 
